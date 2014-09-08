@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekduxu="http://schemas.android.com/apk/res/cn.geekduxu.xmanager"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +14,9 @@
         android:textSize="30sp" />
 
     <cn.geekduxu.xmanager.ui.SettingItemView
+        geekduxu:title="自动检测新版本"
+        geekduxu:desc_on="已开启自动检测新版本"
+        geekduxu:desc_off="已关闭自动检测新版本"
         android:id="@+id/siv_setting_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -31,7 +31,10 @@
     增加两个在自定义View
 
 ---
-###
+###09/09/2014更新：
+    抽取自定义控件的方法到xml定义属性
+        - setDesc(String desc) -> geekduxu:desc_on[off]="xxx"
+    xxx
 
     
 

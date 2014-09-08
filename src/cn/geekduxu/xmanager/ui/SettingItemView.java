@@ -40,6 +40,9 @@ public class SettingItemView extends RelativeLayout {
 	private CheckBox cbStatus;
 	private TextView tvDesc;
 	private TextView tvTiile;
+	
+	private String desc_on;
+	private String desc_off;
 
 	public SettingItemView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -49,6 +52,10 @@ public class SettingItemView extends RelativeLayout {
 	public SettingItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView(context);
+		String title = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "title");
+		desc_on = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "desc_on");
+		desc_off = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "desc_off");
+		tvTiile.setText(title);
 	}
 
 	public SettingItemView(Context context) {
@@ -75,9 +82,14 @@ public class SettingItemView extends RelativeLayout {
 	/** 设置组合控件的状态 */
 	public void setStatus(boolean checked){
 		cbStatus.setChecked(checked);
+		if(checked){
+			tvDesc.setText(desc_on);
+		}else{
+			tvDesc.setText(desc_off);
+		}
 	}
-	/** 设置组合控件的描述信息 */
-	public void setDesc(String desc){
-		tvDesc.setText(desc);
-	}
+//	/** 设置组合控件的描述信息 */
+//	public void setDesc(String desc){
+//		tvDesc.setText(desc);
+//	}
 }

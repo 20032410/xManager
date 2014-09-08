@@ -14,7 +14,6 @@
     
     <cn.geekduxu.xmanager.ui.FocuseTextView
         android:id="@+id/tv_home_marquee"
-        android:focusableInTouchMode="true"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:layout_width="match_parent"
