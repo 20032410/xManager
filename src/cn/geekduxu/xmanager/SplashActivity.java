@@ -147,6 +147,7 @@ public class SplashActivity extends Activity {
     	startActivity(intent);
     	//关闭当前页面
     	finish();	
+    	overridePendingTransition(android.R.anim.fade_out, android.R.anim.fade_in); 
     }
     
     /**

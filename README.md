@@ -34,6 +34,10 @@
 ###09/09/2014更新：
     抽取自定义控件的方法到xml定义属性
         - setDesc(String desc) -> geekduxu:desc_on[off]="xxx"
+    完成进入手机防盗页面的dialog
+        - 第一次进入则先设置密码
+        - 已设置密码则输入密码
+    定义Button点击效果（虽然还是很丑）
     xxx
 
     
