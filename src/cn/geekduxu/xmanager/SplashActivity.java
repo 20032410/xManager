@@ -1,3 +1,27 @@
+/*///////////////////////////////////////////////////////////////// 
+                          _ooOoo_                               
+                         o8888888o                              
+                         88" . "88                              
+                         (| ^_^ |)                              
+                         O\  =  /O                              
+                      ____/`---'\____                            
+                    .'  \\|     |//  `.                          
+                   /  \\|||  :  |||//  \                        
+                  /  _||||| -:- |||||-  \                       
+                  |   | \\\  -  /// |   |                       
+                  | \_|  ''\---/''  |   |                       
+                  \  .-\__  `-`  ___/-. /                        
+                ___`. .'  /--.--\  `. . ___                      
+              ."" '<  `.___\_<|>_/___.'  >'"".                
+            | | :  `- \`.;`\ _ /`;.`/ - ` : | |                  
+            \  \ `-.   \_ __\ /__ _/   .-` /  /                 
+      ========`-.____`-.___\_____/___.-`____.-'========          
+                           `=---='                               
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
+                     佛祖保佑    永无BUG                         
+                   Code by duxu0711@163.com                      
+////////////////////////////////////////////////////////////////*/  
+
 package cn.geekduxu.xmanager;
 
 import java.io.File;
@@ -19,6 +43,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -42,6 +67,7 @@ public class SplashActivity extends Activity {
 	protected static final int NETWORK_ERROR = 3;
 	protected static final int JSON_ERROR = 4;
 
+	private SharedPreferences sp;
 	private TextView tvSplashVersion;
 	private TextView tvUpdateInfo;
 	
@@ -68,8 +94,19 @@ public class SplashActivity extends Activity {
         
         tvUpdateInfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
         
-        //检查升级
-        checkUpdate();
+        //检查升级 
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        if(sp.getBoolean("update", false)){
+        	checkUpdate();
+        }else{
+        	//延迟进入主页
+        	handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					enterHomePage();
+				}
+			}, 2500);
+        }
         
     }
     

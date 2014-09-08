@@ -5,16 +5,26 @@
     android:layout_height="match_parent"
     android:background="@drawable/luncher_bg" >
 
+    <TextView 
+        android:id="@+id/temp_splash_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:layout_centerInParent="true"
+        />
+    
     <TextView
         android:id="@+id/tv_splash_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/temp_splash_center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:shadowColor="#ff0000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="5"
-        android:text="版本：1.0.0"
+        android:text="版本：10.0.11"
         android:textColor="#000000"
         android:textSize="22sp" />
 
@@ -33,6 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:textColor="#222222"
+        android:text=" "
         android:textSize="16sp" />
     
 </RelativeLayout>

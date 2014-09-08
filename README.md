@@ -19,7 +19,7 @@
 
 ---
 
-##09/08/2014更新：
+###09/08/2014更新：
     Splash界面：
         - 渐变动画效果
         - 显示当前版本信息
@@ -27,11 +27,11 @@
     服务器返回的json格式：
         - {version:"x.x.xx",apkurl:"http://xxx.xxx.xx/xx.apk",description:"xxxxx"}
     如果选择升级则下载和跳到安装界面
-    签名
-    
-    TODO:   
-        - Splash背景
-    
+    应用签名.
+    增加两个在自定义View
+
+---
+###
 
     
 

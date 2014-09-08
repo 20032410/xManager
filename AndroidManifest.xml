@@ -29,6 +29,10 @@
             android:name="cn.geekduxu.xmanager.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
+        <activity
+            android:name="cn.geekduxu.xmanager.SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
     </application>
 
 </manifest>
