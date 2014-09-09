@@ -1,5 +1,4 @@
 /*///////////////////////////////////////////////////////////////// 
-
                           _ooOoo_                               
                          o8888888o                              
                          88" . "88                              
@@ -21,68 +20,50 @@
       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
                      佛祖保佑    永无BUG                         
                    Code by duxu0711@163.com                      
-////////////////////////////////////////////////////////////////*/
+////////////////////////////////////////////////////////////////*/ 
 
-package cn.geekduxu.xmanager;
+package cn.geekduxu.xmanager.activity;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
 import android.view.View;
+import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.R.id;
+import cn.geekduxu.xmanager.R.layout;
+import cn.geekduxu.xmanager.ui.SettingItemView;
 
-/**
- * 支持左右滑动翻页
- */
-public abstract class BaseSetupActivity extends Activity {
-
-	// 手势识别器
-	private GestureDetector detector;
-	protected SharedPreferences sp;
+public class SettingActivity extends Activity {
+	
+	private SettingItemView sivUpdate; 
+	private SharedPreferences sp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		sp = getSharedPreferences("config", MODE_PRIVATE);
+		setContentView(R.layout.activity_setting);
 		
-		detector = new GestureDetector(BaseSetupActivity.this,
-				new SimpleOnGestureListener() {
-
-					@Override
-					public boolean onFling(MotionEvent e1, MotionEvent e2,
-							float velocityX, float velocityY) {
-						float x1 = e1.getRawX();
-						float x2 = e2.getRawX();
-						float y1 = e1.getRawY();
-						float y2 = e2.getRawY();
-
-						// 屏蔽斜滑
-						if (Math.abs(x1-x2) < Math.abs(y1-y2) || Math.abs(y1-y2) > 150) {
-						}else if (e2.getRawX() - e1.getRawX() > 150) {
-							// 显示上一个页面
-							pre(null);
-						} else if (e1.getRawX() - e2.getRawX() > 150) {
-							// 显示下一个页面
-							next(null);
-						}
-						return true;
-					}
-				});
-	}
-
-	/** 下一个页面 */
-	public abstract void next(View v);
-	/** 上一个页面 */
-	public abstract void pre(View v);
-
-	// 使用手势识别器
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		detector.onTouchEvent(event);
-		return super.onTouchEvent(event);
+		sp = getSharedPreferences("config", MODE_PRIVATE);
+		//设置是否自动更新
+		sivUpdate = (SettingItemView) findViewById(R.id.siv_setting_update);
+		
+		sivUpdate.setStatus(sp.getBoolean("update", false));
+		
+		sivUpdate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Editor editor = sp.edit();
+				if(sivUpdate.isChecked()){ // 如果目前是选中状态
+					sivUpdate.setStatus(false);
+					editor.putBoolean("update", false);
+				}else{
+					sivUpdate.setStatus(true);
+					editor.putBoolean("update", true);
+				}
+				editor.commit();
+			}
+		});
 	}
 
 }

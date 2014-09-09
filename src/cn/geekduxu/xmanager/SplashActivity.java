@@ -57,6 +57,7 @@ import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.geekduxu.xmanager.activity.HomeActivity;
 import cn.geekduxu.xmanager.utils.StreamTools;
 
 public class SplashActivity extends Activity {

@@ -27,6 +27,7 @@
             android:textSize="20dp" />
 
         <TextView
+            android:id="@+id/tv_safenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -48,6 +49,7 @@
         android:layout_marginTop="10dp" >
 
         <TextView
+            android:id="@+id/tv_isprotecting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -57,6 +59,7 @@
             android:textSize="20dp" />
 
         <ImageView
+            android:id="@+id/iv_isprotecting"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
@@ -124,6 +127,6 @@
     <TextView
         style="@style/text_content_style"
         android:drawableLeft="@android:drawable/star_big_on"
-        android:text="远程锁屏：#*lockscreen*#" />
+        android:text="远程锁屏：#*lockscrn*#" />
 
 </LinearLayout>

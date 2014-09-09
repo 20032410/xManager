@@ -22,45 +22,57 @@
                    Code by duxu0711@163.com                      
 ////////////////////////////////////////////////////////////////*/ 
 
-package cn.geekduxu.xmanager;
+package cn.geekduxu.xmanager.receiver;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.view.View;
-import cn.geekduxu.xmanager.ui.SettingItemView;
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
-public class SettingActivity extends Activity {
-	
-	private SettingItemView sivUpdate; 
+public class SmsReceiver extends BroadcastReceiver {
+
 	private SharedPreferences sp;
-
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setting);
-		
-		sp = getSharedPreferences("config", MODE_PRIVATE);
-		//设置是否自动更新
-		sivUpdate = (SettingItemView) findViewById(R.id.siv_setting_update);
-		
-		sivUpdate.setStatus(sp.getBoolean("update", false));
-		
-		sivUpdate.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Editor editor = sp.edit();
-				if(sivUpdate.isChecked()){ // 如果目前是选中状态
-					sivUpdate.setStatus(false);
-					editor.putBoolean("update", false);
-				}else{
-					sivUpdate.setStatus(true);
-					editor.putBoolean("update", true);
-				}
-				editor.commit();
+	public void onReceive(Context context, Intent intent) {
+
+		sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+		if(!sp.getBoolean("protecting", false)){
+			return;
+		}
+		String safenumber = sp.getString("safenumber", "");
+		if(TextUtils.isEmpty(safenumber)){
+			return;
+		}
+		Object[] objs = (Object[]) intent.getExtras().get("pdus");
+		for (Object obj : objs) {
+			SmsMessage sms = SmsMessage.createFromPdu((byte[]) obj);
+			String sender = sms.getOriginatingAddress();
+			if(!sender.endsWith(sender)){
+				continue;
 			}
-		});
+			String body = sms.getMessageBody();
+			
+			if("#*location*#".equals(body)){ //GPS追踪
+				Toast.makeText(context, "GPS追踪", 0).show();
+				abortBroadcast();
+			}else if("#*alarm*#".equals(body)){ //报警音乐
+				Toast.makeText(context, "报警音乐", 0).show();
+				abortBroadcast();
+			}else if("#*location*#".equals(body)){ //删除数据
+				Toast.makeText(context, "删除数据", 0).show();
+				abortBroadcast();
+			} else if("#*lockscrn*#".equals(body)){ //远程锁屏
+				Toast.makeText(context, "远程锁屏", 0).show();
+				abortBroadcast();
+			}
+			
+		}
 	}
 
 }

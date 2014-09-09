@@ -1,5 +1,9 @@
-package cn.geekduxu.xmanager;
+package cn.geekduxu.xmanager.activity;
 
+import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.R.anim;
+import cn.geekduxu.xmanager.R.id;
+import cn.geekduxu.xmanager.R.layout;
 import cn.geekduxu.xmanager.ui.SettingItemView;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -28,11 +32,9 @@ public class Setup2Activity extends BaseSetupActivity {
 				if(sivBindSim.isChecked()){ //取消保存Sim卡的序列号
 					sivBindSim.setStatus(false);
 					edit.putString("sim", null);
-					Toast.makeText(Setup2Activity.this, "SIM卡已经解除绑定！", Toast.LENGTH_SHORT).show();
 				}else { //保存Sim卡的序列号
 					sivBindSim.setStatus(true);
 					edit.putString("sim", tm.getSimSerialNumber());
-					Toast.makeText(Setup2Activity.this, "SIM卡已经绑定！", Toast.LENGTH_SHORT).show();
 				}
 				edit.commit();
 			}
@@ -46,6 +48,13 @@ public class Setup2Activity extends BaseSetupActivity {
 
 	@Override
 	public void next(View view) {
+		
+		String sim = sp.getString("sim", null);
+		if(TextUtils.isEmpty(sim)){
+			Toast.makeText(Setup2Activity.this, "SIM卡没有绑定，无法使用手机防盗功能！", Toast.LENGTH_LONG).show();
+			return ;
+		}
+		
 		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
 		finish();

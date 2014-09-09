@@ -22,8 +22,12 @@
                    Code by duxu0711@163.com                      
 ////////////////////////////////////////////////////////////////*/  
 
-package cn.geekduxu.xmanager;
+package cn.geekduxu.xmanager.activity;
 
+import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.R.drawable;
+import cn.geekduxu.xmanager.R.id;
+import cn.geekduxu.xmanager.R.layout;
 import cn.geekduxu.xmanager.utils.MD5Util;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -174,12 +178,12 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//取出密码
-				String password = MD5Util.encodeMd5(setupPwd.getText().toString().trim());
+				String password = setupPwd.getText().toString().trim();
 				if(TextUtils.isEmpty(password)){
 					Toast.makeText(HomeActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				if(!sp.getString("password", "").equals(password)){
+				if(!sp.getString("password", "").equals(MD5Util.encodeMd5(password))){
 					setupPwd.setText("");
 					Toast.makeText(HomeActivity.this, "密码错误 ^_^ 请重试", Toast.LENGTH_SHORT).show();
 					return;
