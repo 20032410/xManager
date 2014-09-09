@@ -24,6 +24,7 @@
 
 package cn.geekduxu.xmanager;
 
+import cn.geekduxu.xmanager.utils.MD5Util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -141,9 +142,11 @@ public class HomeActivity extends Activity {
 					return;
 				}
 				Editor edit = sp.edit();
-				edit.putString("password", password);
+				edit.putString("password", MD5Util.encodeMd5(password));
 				edit.commit();
 				dialog.dismiss();
+				Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -171,7 +174,7 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//取出密码
-				String password = setupPwd.getText().toString().trim();
+				String password = MD5Util.encodeMd5(setupPwd.getText().toString().trim());
 				if(TextUtils.isEmpty(password)){
 					Toast.makeText(HomeActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
 					return;
@@ -182,7 +185,8 @@ public class HomeActivity extends Activity {
 					return;
 				}
 				dialog.dismiss();
-				Toast.makeText(HomeActivity.this, "密码正确", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
+				startActivity(intent);
 			}
 		});
 		

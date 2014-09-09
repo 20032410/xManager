@@ -56,6 +56,7 @@ public class SettingItemView extends RelativeLayout {
 		desc_on = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "desc_on");
 		desc_off = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "desc_off");
 		tvTiile.setText(title);
+		setStatus(false);
 	}
 
 	public SettingItemView(Context context) {
@@ -88,8 +89,4 @@ public class SettingItemView extends RelativeLayout {
 			tvDesc.setText(desc_off);
 		}
 	}
-//	/** 设置组合控件的描述信息 */
-//	public void setDesc(String desc){
-//		tvDesc.setText(desc);
-//	}
 }

@@ -10,7 +10,7 @@
         android:background="#8866ff00"
         android:gravity="center"
         android:text="功能列表"
-        android:textSize="30sp" />
+        android:textSize="26sp" />
     
     <cn.geekduxu.xmanager.ui.FocuseTextView
         android:id="@+id/tv_home_marquee"
