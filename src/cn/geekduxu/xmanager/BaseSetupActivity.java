@@ -26,6 +26,7 @@
 package cn.geekduxu.xmanager;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -39,11 +40,14 @@ public abstract class BaseSetupActivity extends Activity {
 
 	// 手势识别器
 	private GestureDetector detector;
+	protected SharedPreferences sp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		sp = getSharedPreferences("config", MODE_PRIVATE);
+		
 		detector = new GestureDetector(BaseSetupActivity.this,
 				new SimpleOnGestureListener() {
 

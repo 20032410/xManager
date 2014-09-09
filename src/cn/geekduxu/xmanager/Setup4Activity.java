@@ -8,13 +8,10 @@ import android.view.View;
 
 public class Setup4Activity extends BaseSetupActivity {
 
-	private SharedPreferences sp;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setup4);
-		sp = getSharedPreferences("config", MODE_PRIVATE);
 	}
 
 	@Override

@@ -28,7 +28,7 @@
         geekduxu:title="点击绑定SIM卡"
         geekduxu:desc_on="SIM卡已经绑定"
         geekduxu:desc_off="SIM卡没有绑定"
-        android:id="@+id/siv_setup_sim"
+        android:id="@+id/siv_setup2_sim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
