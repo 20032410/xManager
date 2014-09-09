@@ -1,14 +1,12 @@
 package cn.geekduxu.xmanager;
 
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 
-public class Setup4Activity extends Activity {
+public class Setup4Activity extends BaseSetupActivity {
 
 	private SharedPreferences sp;
 
@@ -23,6 +21,7 @@ public class Setup4Activity extends Activity {
 	public void onBackPressed() {
 	}
 
+	@Override
 	public void next(View view) {
 		Editor edit = sp.edit();
 		edit.putBoolean("configed", true);
@@ -30,12 +29,15 @@ public class Setup4Activity extends Activity {
 		Intent intent = new Intent(this, LostFoundActivity.class);
 		startActivity(intent);
 		finish();
+		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
 	}
 
+	@Override
 	public void pre(View view) {
 		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
 		finish();
+		overridePendingTransition(R.anim.tran_pre_in, R.anim.tran_pre_out);
 	}
 
 }

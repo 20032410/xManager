@@ -26,10 +26,10 @@
         android:background="@drawable/bg_edittext"
         android:hint="请输入安全号码"
         android:inputType="phone"
-        android:paddingBottom="4dp"
+        android:paddingBottom="6dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="4dp" />
+        android:paddingTop="6dp" />
 
     <Button
         android:layout_width="match_parent"
