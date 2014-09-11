@@ -28,6 +28,7 @@ import cn.geekduxu.xmanager.R;
 import cn.geekduxu.xmanager.R.drawable;
 import cn.geekduxu.xmanager.R.id;
 import cn.geekduxu.xmanager.R.layout;
+import cn.geekduxu.xmanager.utils.AnimationUtil;
 import cn.geekduxu.xmanager.utils.MD5Util;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -91,15 +92,21 @@ public class HomeActivity extends Activity {
 				case 4: break;
 				case 5: break;
 				case 6: break;
-				case 7: break;
+				case 7: //高级工具
+					startActivity(new Intent(HomeActivity.this, ToolsActivity.class));
+					break;
 				case 8: // 进入设置中心
-					Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
-					startActivity(intent);
+					startActivity(new Intent(HomeActivity.this, SettingActivity.class));
 					break;
 				}
 			}
 
 		});
+	}
+	
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
 	}
 	/**
 	 * 显示进入手机防盗时的对话框
@@ -141,8 +148,10 @@ public class HomeActivity extends Activity {
 					Toast.makeText(HomeActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				if(!password.equals(password)){
+				if(!password.equals(repasswd)){
 					Toast.makeText(HomeActivity.this, "两次密码不一致......", Toast.LENGTH_SHORT).show();
+					setupPwd.setText("");
+					confirmPwd.setText("");
 					return;
 				}
 				Editor edit = sp.edit();
@@ -181,9 +190,11 @@ public class HomeActivity extends Activity {
 				String password = setupPwd.getText().toString().trim();
 				if(TextUtils.isEmpty(password)){
 					Toast.makeText(HomeActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
+					AnimationUtil.startRotateAnimation(setupPwd);
 					return;
 				}
 				if(!sp.getString("password", "").equals(MD5Util.encodeMd5(password))){
+					AnimationUtil.startRotateAnimation(setupPwd);
 					setupPwd.setText("");
 					Toast.makeText(HomeActivity.this, "密码错误 ^_^ 请重试", Toast.LENGTH_SHORT).show();
 					return;

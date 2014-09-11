@@ -1,4 +1,5 @@
 /*///////////////////////////////////////////////////////////////// 
+
                           _ooOoo_                               
                          o8888888o                              
                          88" . "88                              
@@ -24,36 +25,52 @@
 
 package cn.geekduxu.xmanager.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.Toast;
 import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.db.PhoneAddressQueryUtil;
+import cn.geekduxu.xmanager.utils.AnimationUtil;
 
-public class Setup1Activity extends BaseSetupActivity {
+public class ToolsActivity extends Activity {
 
+	private EditText etPhoneNumber;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setup1);
+		setContentView(R.layout.activity_tools);
+		
+		etPhoneNumber = (EditText) findViewById(R.id.et_phone_number);
 	}
+	
+	/**
+	 * 查询手机归属地
+	 */
+	public void query(View v){
+		
+		String phoneNumber = etPhoneNumber.getText().toString().trim();
+		if (TextUtils.isEmpty(phoneNumber)) {
+			AnimationUtil.startRotateAnimation(etPhoneNumber);
+			etPhoneNumber.setText("");
+			return;
+		}
+		String address = PhoneAddressQueryUtil.queryAddress(phoneNumber);
+		if(TextUtils.isEmpty(address)){
+			Toast.makeText(this, "电话号码错误", Toast.LENGTH_SHORT).show();
+			AnimationUtil.startRotateAnimation(etPhoneNumber);
+			etPhoneNumber.setText("");
+		}else{
+			Toast.makeText(this, address, Toast.LENGTH_LONG).show();
+		}
+	}
+		
 
-	@Override
-	public void onBackPressed() {
-		Toast.makeText(this, "为了保证手机信息安全，请设置完成后再退出。", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void next(View view) {
-		Intent intent = new Intent(this, Setup2Activity.class);
-		startActivity(intent);
-		finish();
-		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
-	}
-
-	@Override
-	public void pre(View v) {
-	}
 
 }

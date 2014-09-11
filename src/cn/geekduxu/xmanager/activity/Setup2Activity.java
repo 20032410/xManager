@@ -24,11 +24,6 @@
 
 package cn.geekduxu.xmanager.activity;
 
-import cn.geekduxu.xmanager.R;
-import cn.geekduxu.xmanager.R.anim;
-import cn.geekduxu.xmanager.R.id;
-import cn.geekduxu.xmanager.R.layout;
-import cn.geekduxu.xmanager.ui.SettingItemView;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -36,6 +31,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
+import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.ui.SettingItemView;
 
 public class Setup2Activity extends BaseSetupActivity {
 
@@ -68,6 +65,7 @@ public class Setup2Activity extends BaseSetupActivity {
 
 	@Override
 	public void onBackPressed() {
+		Toast.makeText(this, "为了保证手机信息安全，请设置完成后再退出。", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

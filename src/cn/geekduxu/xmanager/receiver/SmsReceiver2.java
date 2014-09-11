@@ -71,41 +71,35 @@ public class SmsReceiver2 extends ContentObserver {
 		
 		Cursor cursor = context.getContentResolver().query(
 				Uri.parse("content://sms/inbox"), 
-				new String[]{"_id", "address", "body", "date"}, "type=1", null, "date desc limit 1");
+				new String[]{"address", "body", "date"}, "type=1", null, "date desc limit 1");
 		if(!cursor.moveToNext()) {
 			return;
 		}
-		String id = cursor.getString(0);
-		String sender = cursor.getString(1);
-		String body = cursor.getString(2);
-		long date = cursor.getLong(3);
+		String sender = cursor.getString(0);
+		String body = cursor.getString(1);
+		long date = cursor.getLong(2);
 		cursor.close();
 		
-		try {
-			int i = context.getContentResolver().delete(
-					Uri.parse("content://sms/"), "_id=?", new String[]{id});
-			Log.i("geekduxu", "delete:"+i);
-		} catch (Exception e) {
-			Log.i("geekduxu", "delete error");
-		}
+		deleteSms(body, date);
 		
 		Log.i("geekduxu", "date:"+date);
 		if(!sender.contains(safenumber)){//不是安全号码的短信
 			return;
 		}
-		
-		if(Math.abs(System.currentTimeMillis()-date) > 500){
-			return;
-		}
-		
+		Log.i("geekduxu", "1");
+//		if(Math.abs(System.currentTimeMillis()-date) > 500){
+//			return;
+//		}
+		Log.i("geekduxu", "2");
 		if(date == lastSmsTime){
 			return;
 		}
-		
+		Log.i("geekduxu", "3");
 		if(null == dpm){
 			dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		}
 		
+		Log.i("geekduxu", "4");
 		if("#*location*#".equals(body)){ //GPS追踪
 			sendLocation(safenumber);
 		}else if("#*alarm*#".equals(body)){ //报警音乐
@@ -126,6 +120,22 @@ public class SmsReceiver2 extends ContentObserver {
 			dpm.resetPassword("duxu", 0);
 		}
 		lastSmsTime = date;
+
+		Log.i("geekduxu", "...");
+	}
+
+	private void deleteSms(final String body, final long date) {
+		new Thread(){
+			public void run() {
+				try {
+					int i = context.getContentResolver().delete(
+							Uri.parse("content://sms/"), "date=? and body=?", new String[]{""+date, body});
+					Log.i("geekduxu", "delete:"+i);
+				} catch (Exception e) {
+					Log.i("geekduxu", "delete error");
+				}
+			}
+		}.start();
 	}
 
 	/**
@@ -160,6 +170,12 @@ public class SmsReceiver2 extends ContentObserver {
 		player.start();
 	}
 	
-	
+	/*		try {
+			int i = context.getContentResolver().delete(
+					Uri.parse("content://sms/"), "date=? and body=?", new String[]{""+date, body});
+			Log.i("geekduxu", "delete:"+i);
+		} catch (Exception e) {
+			Log.i("geekduxu", "delete error");
+		}*/
 
 }

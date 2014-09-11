@@ -113,13 +113,16 @@ public class LostFoundActivity extends Activity {
 					Toast.makeText(LostFoundActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				if(!password.equals(password)){
+				if(!password.equals(repasswd)){
 					Toast.makeText(LostFoundActivity.this, "两次密码不一致......", Toast.LENGTH_SHORT).show();
+					setupPwd.setText("");
+					confirmPwd.setText("");
 					return;
 				}
 				Editor edit = sp.edit();
 				edit.putString("password", MD5Util.encodeMd5(password));
 				edit.commit();
+				Toast.makeText(LostFoundActivity.this, "修改密码成功，请牢记您的密码。", Toast.LENGTH_LONG).show();
 				dialog.dismiss();
 			}
 		});

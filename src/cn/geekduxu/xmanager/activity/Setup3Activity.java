@@ -26,11 +26,7 @@ package cn.geekduxu.xmanager.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -66,6 +62,7 @@ public class Setup3Activity extends BaseSetupActivity {
 
 	@Override
 	public void onBackPressed() {
+		Toast.makeText(this, "为了保证手机信息安全，请设置完成后再退出。", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

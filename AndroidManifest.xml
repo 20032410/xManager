@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -43,7 +44,9 @@
         <activity android:name="cn.geekduxu.xmanager.activity.Setup3Activity" />
         <activity android:name="cn.geekduxu.xmanager.activity.Setup4Activity" />
         <activity android:name="cn.geekduxu.xmanager.activity.SelectContactActivity" />
-        
+        <activity android:name="cn.geekduxu.xmanager.activity.ToolsActivity" />
+        <activity android:name="cn.geekduxu.xmanager.activity.PhoneQueryActivity" />
+
         <service android:name="cn.geekduxu.xmanager.service.GPSService" />
 
         <receiver android:name="cn.geekduxu.xmanager.receiver.BootCompleteReceiver" >
@@ -51,23 +54,28 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        
-        <!-- <receiver android:name="cn.geekduxu.xmanager.receiver.SmsReceiver">
+
+        <!--
+        <receiver android:name="cn.geekduxu.xmanager.receiver.SmsReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
-        </receiver> -->
-        <receiver android:name="cn.geekduxu.xmanager.receiver.DeviceAdmin"
+        </receiver>
+        -->
+        <receiver
+            android:name="cn.geekduxu.xmanager.receiver.DeviceAdmin"
             android:description="@string/description_device_admin"
             android:label="@string/label_device_admin"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data 
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/device_admin" />
+
             <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

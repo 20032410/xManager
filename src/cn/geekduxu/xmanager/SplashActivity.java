@@ -25,12 +25,14 @@
 package cn.geekduxu.xmanager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
@@ -106,6 +108,13 @@ public class SplashActivity extends Activity {
         
         tvUpdateInfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
         
+        //拷贝数据库文件到包下。
+        new Thread(){
+        	public void run() {
+        		copyDatabase();
+        	}
+        }.start();
+        
         //得到SharedPreferences中是否自动升级字段
         sp = getSharedPreferences("config", MODE_PRIVATE);
         if(sp.getBoolean("update", false)) {
@@ -122,8 +131,34 @@ public class SplashActivity extends Activity {
         }
     }
     
-    
-    private Handler handler = new Handler(){
+    /**
+     * 拷贝归属地数据库文件到包目录下
+     */
+    private void copyDatabase() {
+		try {
+			File dbFile = new File(getFilesDir(), "address.db");
+			if(dbFile.exists() && dbFile.length()>0){
+				return;
+			}
+			InputStream is = getAssets().open("address.db");
+			FileOutputStream fos = new FileOutputStream(dbFile);
+			byte[] buffer = new byte[1024];
+			int length = 0;
+			
+			while((length = is.read(buffer)) != -1){
+				fos.write(buffer, 0, length);
+				fos.flush();
+			}
+			
+			fos.close();
+			is.close();
+			
+		} catch (IOException e) {
+		}
+	}
+
+
+	private Handler handler = new Handler(){
     	@Override
     	public void handleMessage(android.os.Message msg) {
     		switch (msg.what) {

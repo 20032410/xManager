@@ -33,6 +33,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 import cn.geekduxu.xmanager.R;
 import cn.geekduxu.xmanager.receiver.DeviceAdmin;
 
@@ -81,6 +82,7 @@ public class Setup4Activity extends BaseSetupActivity {
 
 	@Override
 	public void onBackPressed() {
+		Toast.makeText(this, "为了保证手机信息安全，请设置完成后再退出。", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
