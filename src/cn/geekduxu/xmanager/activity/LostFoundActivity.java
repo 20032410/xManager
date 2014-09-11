@@ -24,15 +24,22 @@
 
 package cn.geekduxu.xmanager.activity;
 
-import cn.geekduxu.xmanager.R;
-import cn.geekduxu.xmanager.R.layout;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.utils.MD5Util;
 
 public class LostFoundActivity extends Activity {
 
@@ -77,6 +84,55 @@ public class LostFoundActivity extends Activity {
 		Intent intent = new Intent(LostFoundActivity.this, Setup1Activity.class);
 		startActivity(intent);
 		finish();
+	}
+	
+	
+	private EditText setupPwd;
+	private EditText confirmPwd;
+	private Button btnOk;
+	private Button btnCancle;
+	private AlertDialog dialog;
+	/**
+	 * 重新设置密码
+	 */
+	public void rePassword(View v){
+		AlertDialog.Builder builder = new Builder(LostFoundActivity.this);
+		View view = View.inflate(LostFoundActivity.this, R.layout.dialog_setup_pwd, null);
+		setupPwd = (EditText) view.findViewById(R.id.et_setup_pwd);
+		confirmPwd = (EditText) view.findViewById(R.id.et_confirm_pwd);
+		btnOk = (Button) view.findViewById(R.id.btn_ok);
+		btnCancle = (Button) view.findViewById(R.id.btn_cancle);
+		
+		btnOk.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//取出密码
+				String password = setupPwd.getText().toString().trim();
+				String repasswd = confirmPwd.getText().toString().trim();
+				if(TextUtils.isEmpty(password) || TextUtils.isEmpty(repasswd)){
+					Toast.makeText(LostFoundActivity.this, "密码不可以为空哦！！！ ^_^", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if(!password.equals(password)){
+					Toast.makeText(LostFoundActivity.this, "两次密码不一致......", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Editor edit = sp.edit();
+				edit.putString("password", MD5Util.encodeMd5(password));
+				edit.commit();
+				dialog.dismiss();
+			}
+		});
+		
+		btnCancle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		builder.setView(view);
+		dialog = builder.show();
 	}
 
 }

@@ -1,5 +1,6 @@
 /*///////////////////////////////////////////////////////////////// 
-                          _ooOoo_                               
+         
+                 _ooOoo_                               
                          o8888888o                              
                          88" . "88                              
                          (| ^_^ |)                              
@@ -24,6 +25,7 @@
 
 package cn.geekduxu.xmanager.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,18 +34,26 @@ import android.media.MediaPlayer;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
-import android.widget.Toast;
+import android.util.Log;
 import cn.geekduxu.xmanager.R;
 import cn.geekduxu.xmanager.service.GPSService;
 
+/**
+ * 在有其他短信软件的情况下可能收不到短信广播<br/>
+ * 换成了用SmsReceiver2，通过监听短信数据库
+ * @see SmsReceiver2
+ */
+@Deprecated
 public class SmsReceiver extends BroadcastReceiver {
 
 	private SharedPreferences sp;
+	private DevicePolicyManager dpm;
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
 		sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+		dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		if(!sp.getBoolean("protecting", false)){
 			return;
 		}
@@ -63,29 +73,30 @@ public class SmsReceiver extends BroadcastReceiver {
 			if("#*location*#".equals(body)){ //GPS追踪
 				Intent i = new Intent(context, GPSService.class);
 				context.startService(i);
-				
 				String lastlocation = sp.getString("lastlocation", "");
+				Log.i("geekduxu", lastlocation);
 				if (!TextUtils.isEmpty(lastlocation)) {
 					//得到位置
 					SmsManager.getDefault().sendTextMessage(safenumber, null, lastlocation, null, null);
 				}
 				abortBroadcast();
 			}else if("#*alarm*#".equals(body)){ //报警音乐
-				Toast.makeText(context, "报警音乐", 0).show();
 				MediaPlayer player = MediaPlayer.create(context, R.raw.ylzs);
 //				player.setLooping(true);
 				player.setVolume(1.0f, 1.0f);
 				player.start();
-				
 				abortBroadcast();
-			}else if("#*location*#".equals(body)){ //删除数据
-				Toast.makeText(context, "删除数据", 0).show();
+			}else if("#*wipedata*#".equals(body)){ //删除数据
+				//清除Sdcard上的数据
+//				dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+				//恢复出厂设置
+//				dpm.wipeData(0);
 				abortBroadcast();
 			} else if("#*lockscrn*#".equals(body)){ //远程锁屏
-				//
+				dpm.lockNow();
+				dpm.resetPassword("0000", 0);
 				abortBroadcast();
 			}
-			
 		}
 	}
 

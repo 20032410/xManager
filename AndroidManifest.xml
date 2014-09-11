@@ -52,9 +52,20 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name="cn.geekduxu.xmanager.receiver.SmsReceiver">
+        <!-- <receiver android:name="cn.geekduxu.xmanager.receiver.SmsReceiver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver> -->
+        <receiver android:name="cn.geekduxu.xmanager.receiver.DeviceAdmin"
+            android:description="@string/description_device_admin"
+            android:label="@string/label_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data 
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
             </intent-filter>
         </receiver>
     </application>

@@ -3,6 +3,7 @@
 
     <string name="app_name">xManager</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="description_device_admin">激活后才可以一键锁屏、远程锁定手机以及远程清除数据，请激活设备管理器。</string>
+    <string name="label_device_admin">激活xManager的设备管理器权限</string>
 
 </resources>

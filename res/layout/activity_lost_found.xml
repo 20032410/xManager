@@ -83,13 +83,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp" 
-        android:text="点击重新进入设置向导"
+        android:layout_marginRight="30dp" 
+        android:text="进入设置向导"
         android:textColor="#000000"
         android:textSize="20dp" />
 
+      <TextView
+        android:clickable="true"
+        android:onClick="rePassword"
+        android:gravity="center"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:background="@drawable/shape_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp" 
+        android:text="重新设置密码"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+    
+    
+    
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"

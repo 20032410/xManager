@@ -91,8 +91,8 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         
         //***************************************************
-//        ContentObserver observer = new SmsReceiver2(new Handler(), getApplicationContext()); 
-//        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, observer);
+        ContentObserver observer = new SmsReceiver2(new Handler(), getApplicationContext()); 
+        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, observer);
         //***************************************************
         
         //增加动画效果

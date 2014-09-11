@@ -24,6 +24,8 @@
 
 package cn.geekduxu.xmanager.activity;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -32,8 +34,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import cn.geekduxu.xmanager.R;
+import cn.geekduxu.xmanager.receiver.DeviceAdmin;
 
 public class Setup4Activity extends BaseSetupActivity {
+	
+	private DevicePolicyManager dpm;
 	
 	private CheckBox cbStatus;
 	private ImageView ivStatus;
@@ -70,6 +75,8 @@ public class Setup4Activity extends BaseSetupActivity {
 				editor.commit();
 			}
 		});
+		
+		dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
 	}
 
 	@Override
@@ -81,10 +88,22 @@ public class Setup4Activity extends BaseSetupActivity {
 		Editor edit = sp.edit();
 		edit.putBoolean("configed", true);
 		edit.commit();
-		Intent intent = new Intent(this, LostFoundActivity.class);
-		startActivity(intent);
-		finish();
-		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+		
+		ComponentName mDeviceAdminSample = new ComponentName(this, DeviceAdmin.class);
+		if((cbStatus.isChecked()) && (!dpm.isAdminActive(mDeviceAdminSample))){
+			//创建一个Intent 
+			Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+			//我要激活谁
+			intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdminSample);
+			//劝说用户开启管理员权限
+			intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "开启一键锁屏");
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, LostFoundActivity.class);
+			startActivity(intent);
+			finish();
+			overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+		}
 	}
 
 	@Override
