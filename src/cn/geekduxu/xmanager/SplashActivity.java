@@ -47,26 +47,32 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.geekduxu.xmanager.activity.HomeActivity;
+import cn.geekduxu.xmanager.receiver.SmsReceiver2;
 import cn.geekduxu.xmanager.utils.StreamTools;
 
 public class SplashActivity extends Activity {
 	
-	protected static final int ENTER_HOME_PAGE = 0;
-	protected static final int SHOW_UPDATE_DIALOG = 1;
-	protected static final int URL_ERROR = 2;
-	protected static final int NETWORK_ERROR = 3;
-	protected static final int JSON_ERROR = 4;
+	/** 进入主页消息 */
+	private static final int ENTER_HOME_PAGE = 0;
+	/** 显示升级对话框消息 */
+	private static final int SHOW_UPDATE_DIALOG = 1;
+	/** URL错误消息 */
+	private static final int URL_ERROR = 2;
+	/** 网络错误消息 */
+	private static final int NETWORK_ERROR = 3;
+	/** JSON解析错误消息 */
+	private static final int JSON_ERROR = 4;
 
 	private SharedPreferences sp;
 	private TextView tvSplashVersion;
@@ -84,6 +90,11 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         
+        //***************************************************
+//        ContentObserver observer = new SmsReceiver2(new Handler(), getApplicationContext()); 
+//        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, observer);
+        //***************************************************
+        
         //增加动画效果
         AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
         aa.setDuration(1000);
@@ -95,11 +106,12 @@ public class SplashActivity extends Activity {
         
         tvUpdateInfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
         
-        //检查升级 
+        //得到SharedPreferences中是否自动升级字段
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        if(sp.getBoolean("update", false)){
+        if(sp.getBoolean("update", false)) {
+        	//检查升级 
         	checkUpdate();
-        }else{
+        } else {
         	//延迟进入主页
         	handler.postDelayed(new Runnable() {
 				@Override
@@ -108,7 +120,6 @@ public class SplashActivity extends Activity {
 				}
 			}, 2500);
         }
-        
     }
     
     
@@ -118,7 +129,6 @@ public class SplashActivity extends Activity {
     		switch (msg.what) {
 			case SHOW_UPDATE_DIALOG: //显示升级对话框
 				showUpdateDialog();
-				Log.i("geekduxu", "升级对话框");
 				break;
 			case ENTER_HOME_PAGE: //进入主页面
 				enterHomePage();
@@ -166,40 +176,39 @@ public class SplashActivity extends Activity {
 					//存在sd卡
 					FinalHttp finalHttp = new FinalHttp();
 					finalHttp.download(apkurl, 
-							Environment.getExternalStorageDirectory().getAbsolutePath()+"xManager-"+version+".apk",
-							new AjaxCallBack<File>() {
-								@Override
-								public void onFailure(Throwable t, int errorNo, String strMsg) {
-									Toast.makeText(SplashActivity.this, "下载更新失败，请稍后再试。", Toast.LENGTH_LONG).show();
-									super.onFailure(t, errorNo, strMsg);
-									enterHomePage();
-								}
-								@Override
-								public void onLoading(long count, long current) {
-									super.onLoading(count, current);
-									//显示当前下载的百分比
-									tvUpdateInfo.setText("下载进度："+ (current*100/count) +"%");
-								}
-								@Override
-								public void onSuccess(File file) {
-									super.onSuccess(file);
-									//下载成功，安装apk
-									installApk(file);
-								}
-								/**
-								 * 安装apk
-								 * @param file
-								 */
-								private void installApk(File file) {
-									Intent intent = new Intent();
-									intent.setAction("android.intent.action.VIEW");
-									intent.addCategory("android.intent.category.DEFAULT");
-									intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-									startActivity(intent);
-								}
-								
-							});
-				}else{
+						Environment.getExternalStorageDirectory().getAbsolutePath()+"xManager-"+version+".apk",
+						new AjaxCallBack<File>() {
+							@Override
+							public void onFailure(Throwable t, int errorNo, String strMsg) {
+								Toast.makeText(SplashActivity.this, "下载更新失败，请稍后再试。", Toast.LENGTH_LONG).show();
+								super.onFailure(t, errorNo, strMsg);
+								enterHomePage();
+							}
+							@Override
+							public void onLoading(long count, long current) {
+								super.onLoading(count, current);
+								//显示当前下载的百分比
+								tvUpdateInfo.setText("下载进度："+ (current*100/count) +"%");
+							}
+							@Override
+							public void onSuccess(File file) {
+								super.onSuccess(file);
+								//下载成功，安装apk
+								installApk(file);
+							}
+							/**
+							 * 安装apk
+							 * @param file
+							 */
+							private void installApk(File file) {
+								Intent intent = new Intent();
+								intent.setAction("android.intent.action.VIEW");
+								intent.addCategory("android.intent.category.DEFAULT");
+								intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+								startActivity(intent);
+							}
+						});
+				} else {
 					//不存在sd卡
 					Toast.makeText(SplashActivity.this, "没有找到SD卡，请先安装SD卡。", Toast.LENGTH_LONG).show();
 					return;

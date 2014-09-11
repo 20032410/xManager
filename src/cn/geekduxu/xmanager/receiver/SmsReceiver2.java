@@ -20,40 +20,38 @@
       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
                      ·ð×æ±£ÓÓ    ÓÀÎÞBUG                         
                    Code by duxu0711@163.com                      
-////////////////////////////////////////////////////////////////*/  
+////////////////////////////////////////////////////////////////*/ 
 
-package cn.geekduxu.xmanager.activity;
+package cn.geekduxu.xmanager.receiver;
 
-import cn.geekduxu.xmanager.R;
-import cn.geekduxu.xmanager.R.anim;
-import cn.geekduxu.xmanager.R.layout;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
+import android.content.Context;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Handler;
+import android.widget.Toast;
 
-public class Setup1Activity extends BaseSetupActivity {
+public class SmsReceiver2 extends ContentObserver {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setup1);
+	private Context context;
+	
+	public SmsReceiver2(Handler handler, Context context) {
+		super(handler);
+		this.context = context;
 	}
 
 	@Override
-	public void onBackPressed() {
+	public void onChange(boolean selfChange, Uri uri) {
+		//
+		Toast.makeText(context, "Uri:"+uri, 1).show();
+		String id = uri.toString();
+		id = id.substring(id.charAt('/')+1);
+		Cursor cursor = context.getContentResolver().query(
+				uri, new String[]{"address", "body"}, "id=? and type=1", new String[]{""}, null);
+//		if()
+		
 	}
-
-	@Override
-	public void next(View view) {
-		Intent intent = new Intent(this, Setup2Activity.class);
-		startActivity(intent);
-		finish();
-		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
-	}
-
-	@Override
-	public void pre(View v) {
-	}
+	
+	
 
 }
