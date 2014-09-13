@@ -14,11 +14,24 @@
         android:textSize="26sp" />
 
     <cn.geekduxu.xmanager.ui.SettingItemView
-        geekduxu:title="自动检测新版本"
-        geekduxu:desc_on="已开启自动检测新版本"
-        geekduxu:desc_off="已关闭自动检测新版本"
         android:id="@+id/siv_setting_update"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        geekduxu:desc_off="已关闭自动检测新版本"
+        geekduxu:desc_on="已开启自动检测新版本"
+        geekduxu:title="自动检测新版本" />
+
+    <cn.geekduxu.xmanager.ui.SettingItemView
+        android:id="@+id/siv_setting_showaddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        geekduxu:desc_off="已关闭显示号码归属地"
+        geekduxu:desc_on="已开启显示号码归属地"
+        geekduxu:title="显示号码归属地" />
+    <cn.geekduxu.xmanager.ui.SettingClickView
+        android:id="@+id/scv_change_bg"
+        geekduxu:title="归属地提示框风格" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

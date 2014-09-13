@@ -190,11 +190,11 @@ public class HomeActivity extends Activity {
 				String password = setupPwd.getText().toString().trim();
 				if(TextUtils.isEmpty(password)){
 					Toast.makeText(HomeActivity.this, "√‹¬Î≤ªø…“‘Œ™ø’≈∂£°£°£° ^_^", Toast.LENGTH_SHORT).show();
-					AnimationUtil.startRotateAnimation(setupPwd);
+					AnimationUtil.startRotateAnimation(HomeActivity.this, setupPwd);
 					return;
 				}
 				if(!sp.getString("password", "").equals(MD5Util.encodeMd5(password))){
-					AnimationUtil.startRotateAnimation(setupPwd);
+					AnimationUtil.startRotateAnimation(HomeActivity.this, setupPwd);
 					setupPwd.setText("");
 					Toast.makeText(HomeActivity.this, "√‹¬Î¥ÌŒÛ ^_^ «Î÷ÿ ‘", Toast.LENGTH_SHORT).show();
 					return;

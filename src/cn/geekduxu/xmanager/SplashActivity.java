@@ -60,7 +60,9 @@ import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.geekduxu.xmanager.activity.HomeActivity;
+import cn.geekduxu.xmanager.activity.SettingActivity;
 import cn.geekduxu.xmanager.receiver.SmsReceiver2;
+import cn.geekduxu.xmanager.service.AddressService;
 import cn.geekduxu.xmanager.utils.StreamTools;
 
 public class SplashActivity extends Activity {
@@ -91,11 +93,8 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        
-        //***************************************************
-        ContentObserver observer = new SmsReceiver2(new Handler(), getApplicationContext()); 
-        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, observer);
-        //***************************************************
+
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         
         //增加动画效果
         AlphaAnimation aa = new AlphaAnimation(0.2f, 1.0f);
@@ -108,6 +107,9 @@ public class SplashActivity extends Activity {
         
         tvUpdateInfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
         
+        //开启服务
+        startServices();
+        
         //拷贝数据库文件到包下。
         new Thread(){
         	public void run() {
@@ -116,7 +118,6 @@ public class SplashActivity extends Activity {
         }.start();
         
         //得到SharedPreferences中是否自动升级字段
-        sp = getSharedPreferences("config", MODE_PRIVATE);
         if(sp.getBoolean("update", false)) {
         	//检查升级 
         	checkUpdate();
@@ -131,7 +132,19 @@ public class SplashActivity extends Activity {
         }
     }
     
-    /**
+    private void startServices() {
+    	if(sp.getBoolean("showaddress", true)){
+    		Intent intent = new Intent(SplashActivity.this, AddressService.class);
+    		startService(intent);
+    	}
+    	//***************************************************
+        ContentObserver observer = new SmsReceiver2(new Handler(), getApplicationContext()); 
+        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, observer);
+        //***************************************************
+        
+	}
+
+	/**
      * 拷贝归属地数据库文件到包目录下
      */
     private void copyDatabase() {

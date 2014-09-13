@@ -1,5 +1,4 @@
 /*///////////////////////////////////////////////////////////////// 
-
                           _ooOoo_                               
                          o8888888o                              
                          88" . "88                              
@@ -21,56 +20,51 @@
       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
                      佛祖保佑    永无BUG                         
                    Code by duxu0711@163.com                      
-////////////////////////////////////////////////////////////////*/  
+////////////////////////////////////////////////////////////////*/
 
-package cn.geekduxu.xmanager.activity;
+package cn.geekduxu.xmanager.ui;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.EditText;
-import android.widget.Toast;
 import cn.geekduxu.xmanager.R;
-import cn.geekduxu.xmanager.db.PhoneAddressQueryUtil;
-import cn.geekduxu.xmanager.utils.AnimationUtil;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-public class ToolsActivity extends Activity {
-
-	private EditText etPhoneNumber;
+public class SettingClickView extends RelativeLayout {
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tools);
-		
-		etPhoneNumber = (EditText) findViewById(R.id.et_phone_number);
+	private TextView tvDesc;
+	private TextView tvTiile;
+	
+	public SettingClickView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		initView(context);
 	}
-	
+
+	public SettingClickView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		initView(context);
+		String title = attrs.getAttributeValue("http://schemas.android.com/apk/res/cn.geekduxu.xmanager", "title");
+		tvTiile.setText(title);
+	}
+
+	public SettingClickView(Context context) {
+		super(context);
+		initView(context);
+	}
+
 	/**
-	 * 查询手机归属地
+	 * 初始化布局文件
 	 */
-	public void query(View v){
-		
-		String phoneNumber = etPhoneNumber.getText().toString().trim();
-		if (TextUtils.isEmpty(phoneNumber)) {
-			AnimationUtil.startRotateAnimation(ToolsActivity.this,etPhoneNumber);
-			etPhoneNumber.setText("");
-			return;
-		}
-		String address = PhoneAddressQueryUtil.queryAddress(phoneNumber);
-		if(TextUtils.isEmpty(address)){
-			Toast.makeText(this, "电话号码错误", Toast.LENGTH_SHORT).show();
-			AnimationUtil.startRotateAnimation(ToolsActivity.this, etPhoneNumber);
-			etPhoneNumber.setText("");
-		}else{
-			Toast.makeText(this, address, Toast.LENGTH_LONG).show();
-		}
+	private void initView(Context context) {
+		//加载布局文件
+		View.inflate(context, R.layout.setting_click_view, this);
+		tvTiile = (TextView) findViewById(R.id.tv_title);
+		tvDesc = (TextView) findViewById(R.id.tv_desc);
 	}
-		
-
-
+	
+	public void setDesc(String desc){
+		tvDesc.setText(desc);
+	}
 }

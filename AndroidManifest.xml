@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +48,7 @@
         <activity android:name="cn.geekduxu.xmanager.activity.PhoneQueryActivity" />
 
         <service android:name="cn.geekduxu.xmanager.service.GPSService" />
+        <service android:name="cn.geekduxu.xmanager.service.AddressService" />
 
         <receiver android:name="cn.geekduxu.xmanager.receiver.BootCompleteReceiver" >
             <intent-filter>

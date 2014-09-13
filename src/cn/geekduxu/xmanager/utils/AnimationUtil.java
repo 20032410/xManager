@@ -24,13 +24,15 @@
 
 package cn.geekduxu.xmanager.utils;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
 public class AnimationUtil {
 	
-	public static void startRotateAnimation(View view){
+	public static void startRotateAnimation(Context context,View view){
 		RotateAnimation ra = new RotateAnimation(-1, 1, 
 				Animation.RELATIVE_TO_SELF, 0.5f, 
 				Animation.RELATIVE_TO_SELF, 0.5f);
@@ -39,6 +41,9 @@ public class AnimationUtil {
 		ra.setRepeatMode(Animation.REVERSE);
 		ra.setFillAfter(false);//动画执行完后是否停留在执行完的状态 
 		view.startAnimation(ra);
+		
+		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(new long[]{0, 100, 100, 100}, -1);
 	}
 
 }
