@@ -1,5 +1,4 @@
 /*///////////////////////////////////////////////////////////////// 
-
                           _ooOoo_                               
                          o8888888o                              
                          88" . "88                              
@@ -23,29 +22,39 @@
                    Code by duxu0711@163.com                      
 ////////////////////////////////////////////////////////////////*/
 
-package cn.geekduxu.xmanager.utils;
+package cn.geekduxu.xmanager.domain;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.Serializable;
 
-public class StreamTools {
-	/**
-	 * @param is
-	 *            输入流
-	 * @return String 返回的字符串
-	 * @throws IOException
-	 */
-	public static String readFromStream(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		int len = 0;
-		while ((len = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, len);
-		}
-		is.close();
-		String result = baos.toString();
-		baos.close();
-		return result;
+public class BlackListInfo implements Serializable {
+
+	private static final long serialVersionUID = 7878976947116996525L;
+	private String number;
+	private String mode;
+
+	public BlackListInfo() {
 	}
+
+	public BlackListInfo(String number, String mode) {
+		super();
+		this.number = number;
+		this.mode = mode;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
 }

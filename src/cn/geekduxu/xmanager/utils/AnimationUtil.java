@@ -32,6 +32,8 @@ import android.view.animation.RotateAnimation;
 
 public class AnimationUtil {
 	
+	private static final long[] VIBRATE_PATTREN = new long[]{1, 100, 100, 100};
+
 	public static void startRotateAnimation(Context context,View view){
 		RotateAnimation ra = new RotateAnimation(-1, 1, 
 				Animation.RELATIVE_TO_SELF, 0.5f, 
@@ -41,9 +43,11 @@ public class AnimationUtil {
 		ra.setRepeatMode(Animation.REVERSE);
 		ra.setFillAfter(false);//动画执行完后是否停留在执行完的状态 
 		view.startAnimation(ra);
-		
-		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(new long[]{0, 100, 100, 100}, -1);
+		try {
+			Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+			vibrator.vibrate(VIBRATE_PATTREN, -1);
+		} catch (Exception e) {
+		}
 	}
 
 }

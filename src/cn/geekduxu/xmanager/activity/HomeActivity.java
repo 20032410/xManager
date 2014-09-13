@@ -86,7 +86,9 @@ public class HomeActivity extends Activity {
 				case 0: // 进入手机防盗
 					showLostFoundDialog();
 					break;
-				case 1: break;
+				case 1://通讯卫士
+					startActivity(new Intent(HomeActivity.this, CallAndSmsSafeActivity.class));
+					break;
 				case 2: break;
 				case 3: break;
 				case 4: break;

@@ -21,31 +21,37 @@
       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
                      佛祖保佑    永无BUG                         
                    Code by duxu0711@163.com                      
-////////////////////////////////////////////////////////////////*/
+////////////////////////////////////////////////////////////////*/ 
 
-package cn.geekduxu.xmanager.utils;
+package cn.geekduxu.xmanager.db;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import android.content.Context;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
-public class StreamTools {
-	/**
-	 * @param is
-	 *            输入流
-	 * @return String 返回的字符串
-	 * @throws IOException
-	 */
-	public static String readFromStream(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		int len = 0;
-		while ((len = is.read(buffer)) != -1) {
-			baos.write(buffer, 0, len);
-		}
-		is.close();
-		String result = baos.toString();
-		baos.close();
-		return result;
+/**
+ * 黑名单数据库帮助类
+ * @author Administrator
+ *
+ */
+public class BlackListDatabaseOpenHelper extends SQLiteOpenHelper {
+
+	public BlackListDatabaseOpenHelper(Context context) {
+		super(context, "blacklist.db", null, 1);
 	}
+
+	/**
+	 * 初始化数据库表结构
+	 */
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		db.execSQL("CREATE TABLE blacklist (_id integer primary key autoincrement,number varchar(20), mode varchar(2))");
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	}
+
 }

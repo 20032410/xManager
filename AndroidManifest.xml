@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -45,7 +47,7 @@
         <activity android:name="cn.geekduxu.xmanager.activity.Setup4Activity" />
         <activity android:name="cn.geekduxu.xmanager.activity.SelectContactActivity" />
         <activity android:name="cn.geekduxu.xmanager.activity.ToolsActivity" />
-        <activity android:name="cn.geekduxu.xmanager.activity.PhoneQueryActivity" />
+        <activity android:name="cn.geekduxu.xmanager.activity.CallAndSmsSafeActivity" />
 
         <service android:name="cn.geekduxu.xmanager.service.GPSService" />
         <service android:name="cn.geekduxu.xmanager.service.AddressService" />
@@ -61,7 +63,7 @@
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
         <receiver
             android:name="cn.geekduxu.xmanager.receiver.DeviceAdmin"
@@ -76,7 +78,6 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

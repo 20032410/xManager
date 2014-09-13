@@ -5,21 +5,21 @@
     android:layout_height="match_parent"
     android:background="@drawable/luncher_bg" >
 
-    <TextView 
+    <TextView
         android:id="@+id/temp_splash_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" "
         android:layout_centerInParent="true"
-        />
-    
+        android:text=" " />
+
     <TextView
         android:id="@+id/tv_splash_version"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/temp_splash_center"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
         android:shadowColor="#ff0000"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -41,8 +41,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
-        android:textColor="#222222"
         android:text=" "
+        android:textColor="#222222"
         android:textSize="16sp" />
-    
+
 </RelativeLayout>

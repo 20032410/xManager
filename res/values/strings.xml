@@ -8,5 +8,6 @@
     <string name="title_activity_tools">ToolsActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_phone_query">PhoneQueryActivity</string>
+    <string name="title_activity_call_and_sms_safe">CallAndSmsSafeActivity</string>
 
 </resources>
