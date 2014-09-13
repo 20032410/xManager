@@ -62,10 +62,9 @@ public class BlackListDao {
 	 * 查询全部黑名单号码
 	 */
 	public List<BlackListInfo> queryAll() {
-		
-		List<BlackListInfo> infos = new ArrayList<BlackListInfo>();
 		SQLiteDatabase db = helper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select number, mode from blacklist", null);
+		Cursor cursor = db.rawQuery("select number, mode from blacklist order by _id desc", null);
+		List<BlackListInfo> infos = new ArrayList<BlackListInfo>(cursor.getColumnCount());
 		while (cursor.moveToNext()) {
 			infos.add(new BlackListInfo(cursor.getString(0), cursor.getString(1)));
 		}

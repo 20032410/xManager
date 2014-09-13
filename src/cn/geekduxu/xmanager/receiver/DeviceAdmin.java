@@ -21,7 +21,7 @@
       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        
                      ·ð×æ±£ÓÓ    ÓÀÎÞBUG                         
                    Code by duxu0711@163.com                      
-////////////////////////////////////////////////////////////////*/ 
+////////////////////////////////////////////////////////////////*/
 
 package cn.geekduxu.xmanager.receiver;
 
@@ -29,6 +29,4 @@ import android.app.admin.DeviceAdminReceiver;
 
 public class DeviceAdmin extends DeviceAdminReceiver {
 
-	
-	
 }

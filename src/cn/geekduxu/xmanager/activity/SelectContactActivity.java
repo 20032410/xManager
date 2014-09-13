@@ -25,6 +25,8 @@
 package cn.geekduxu.xmanager.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +114,12 @@ public class SelectContactActivity extends Activity {
 			data.close();
 		}
 		cursor.close();
+		Collections.sort(list, new Comparator<Map<String, String>>() {
+			@Override
+			public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+				return lhs.get("name").compareTo(rhs.get("name"));
+			}
+		});
 		return list;
 	}
 	
