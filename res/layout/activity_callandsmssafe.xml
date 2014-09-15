@@ -8,13 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#8866ff00" >
-
+        
         <TextView
+            style="@style/title_style"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:gravity="center"
-            android:text="通讯卫士"
-            android:textSize="26sp" />
+            android:text="通讯卫士" />
 
         <Button
             android:layout_width="55dp"

@@ -5,12 +5,8 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#8866ff00"
-        android:gravity="center"
-        android:text="高级工具"
-        android:textSize="26sp" />
+        style="@style/title_style"
+        android:text="高级工具"  />
 
     <TextView
         android:layout_width="match_parent"

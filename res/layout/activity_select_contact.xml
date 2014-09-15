@@ -5,12 +5,14 @@
     android:orientation="vertical" >
 
     <TextView
+        style="@style/title_style"
+        android:text="选择联系人"/>
+    
+    <View
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#8866ff00"
-        android:gravity="center"
-        android:text="选择联系人"
-        android:textSize="26sp" />
+        android:layout_height="10dp"
+        android:background="#00000000" />
+   
 
     <ListView
         android:id="@+id/list_select_contact"

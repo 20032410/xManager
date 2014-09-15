@@ -7,15 +7,13 @@
     android:orientation="vertical" >
 
     <TextView
+        style="@style/title_style"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#66ff6600"
-        android:gravity="center"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:text="增加黑名单记录"
-        android:textColor="#000000"
         android:textSize="24sp" />
 
     <EditText

@@ -5,10 +5,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#8866ff00"
-        android:gravity="center"
+        style="@style/title_style"
         android:text="1. 欢迎使用手机防盗"
         android:textSize="24sp" />
 

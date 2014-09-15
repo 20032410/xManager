@@ -6,10 +6,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#8866ff00"
-        android:gravity="center"
+        style="@style/title_style"
         android:text="4. 恭喜您，设置完成"
         android:textSize="24sp" />
 

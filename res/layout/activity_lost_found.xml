@@ -5,12 +5,8 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#8866ff00"
-        android:gravity="center"
-        android:text="手机防盗"
-        android:textSize="26sp" />
+        style="@style/title_style"
+        android:text="手机防盗"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
