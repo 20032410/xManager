@@ -57,6 +57,21 @@ public class BlackListDao {
 		db.close();
 		return result;
 	}
+	/**
+	 * 查询黑名单号码拦截模式
+	 */
+	public String findMode(String number) {
+		SQLiteDatabase db = helper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select mode from blacklist where number=?",
+				new String[] { number });
+		String rst = null;
+		if(cursor.moveToNext()){
+			rst = cursor.getString(0);
+		}
+		cursor.close();
+		db.close();
+		return rst;
+	}
 
 	/**
 	 * 查询全部黑名单号码

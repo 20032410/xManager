@@ -51,6 +51,7 @@
 
         <service android:name="cn.geekduxu.xmanager.service.GPSService" />
         <service android:name="cn.geekduxu.xmanager.service.AddressService" />
+        <service android:name="cn.geekduxu.xmanager.service.CallAndSmsSafeService" />
 
         <receiver android:name="cn.geekduxu.xmanager.receiver.BootCompleteReceiver" >
             <intent-filter>
@@ -63,7 +64,7 @@
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
         <receiver
             android:name="cn.geekduxu.xmanager.receiver.DeviceAdmin"

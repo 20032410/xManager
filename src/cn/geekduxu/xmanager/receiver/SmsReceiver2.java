@@ -82,24 +82,19 @@ public class SmsReceiver2 extends ContentObserver {
 		
 		deleteSms(body, date);
 		
-		Log.i("geekduxu", "date:"+date);
 		if(!sender.contains(safenumber)){//不是安全号码的短信
 			return;
 		}
-		Log.i("geekduxu", "1");
 //		if(Math.abs(System.currentTimeMillis()-date) > 500){
 //			return;
 //		}
-		Log.i("geekduxu", "2");
 		if(date == lastSmsTime){
 			return;
 		}
-		Log.i("geekduxu", "3");
 		if(null == dpm){
 			dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		}
 		
-		Log.i("geekduxu", "4");
 		if("#*location*#".equals(body)){ //GPS追踪
 			sendLocation(safenumber);
 		}else if("#*alarm*#".equals(body)){ //报警音乐
@@ -121,7 +116,6 @@ public class SmsReceiver2 extends ContentObserver {
 		}
 		lastSmsTime = date;
 
-		Log.i("geekduxu", "...");
 	}
 
 	private void deleteSms(final String body, final long date) {
@@ -130,7 +124,6 @@ public class SmsReceiver2 extends ContentObserver {
 				try {
 					int i = context.getContentResolver().delete(
 							Uri.parse("content://sms/"), "date=? and body=?", new String[]{""+date, body});
-					Log.i("geekduxu", "delete:"+i);
 				} catch (Exception e) {
 					Log.i("geekduxu", "delete error");
 				}

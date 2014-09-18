@@ -32,13 +32,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import cn.geekduxu.xmanager.R;
 import cn.geekduxu.xmanager.R.id;
 import cn.geekduxu.xmanager.R.layout;
 import cn.geekduxu.xmanager.service.AddressService;
+import cn.geekduxu.xmanager.service.CallAndSmsSafeService;
 import cn.geekduxu.xmanager.ui.SettingClickView;
 import cn.geekduxu.xmanager.ui.SettingItemView;
+import cn.geekduxu.xmanager.utils.ServiceUtil;
 
 public class SettingActivity extends Activity {
 	
@@ -47,6 +50,7 @@ public class SettingActivity extends Activity {
 	};
 	private SettingItemView sivUpdate; 
 	private SettingItemView sivShowAddress; 
+	private SettingItemView sivCallSmsSafe; 
 	private SettingClickView scvChangeBg; 
 	private SharedPreferences sp;
 
@@ -59,8 +63,32 @@ public class SettingActivity extends Activity {
 		initUpdate();
 		initShowAddress();
 		initBg();
+		initCallSmsSafe();
 	}
-	
+
+	private void initCallSmsSafe() {
+		final Intent callSmsSafeIntent = new Intent(SettingActivity.this, CallAndSmsSafeService.class);
+		sivCallSmsSafe = (SettingItemView) findViewById(R.id.siv_callsms_safe);
+		sivCallSmsSafe.setStatus(sp.getBoolean("callsmssafe", false));
+		sivCallSmsSafe.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Editor editor = sp.edit();
+				if(sivCallSmsSafe.isChecked()){ // 如果目前是选中状态
+					sivCallSmsSafe.setStatus(false);
+					editor.putBoolean("callsmssafe", false);
+					stopService(callSmsSafeIntent);
+				}else{
+					sivCallSmsSafe.setStatus(true);
+					editor.putBoolean("callsmssafe", true);
+					startService(callSmsSafeIntent);
+					Log.i("geekduxu", "click ");
+				}
+				editor.commit();
+			}
+		});
+	}
+
 	private void initUpdate() {
 		//设置是否自动更新
 		sivUpdate = (SettingItemView) findViewById(R.id.siv_setting_update);
@@ -82,10 +110,10 @@ public class SettingActivity extends Activity {
 	}
 
 	private void initShowAddress() {
+		final Intent showAddressIntent = new Intent(SettingActivity.this, AddressService.class);
 		sivShowAddress = (SettingItemView) findViewById(R.id.siv_setting_showaddress);
 		sivShowAddress.setStatus(sp.getBoolean("showaddress", true));
 		sivShowAddress.setOnClickListener(new View.OnClickListener() {
-			Intent intent = new Intent(SettingActivity.this, AddressService.class);
 			@Override
 			public void onClick(View v) {
 				Editor editor = sp.edit();
@@ -93,12 +121,12 @@ public class SettingActivity extends Activity {
 					sivShowAddress.setStatus(false);
 					editor.putBoolean("showaddress", false);
 					scvChangeBg.setClickable(false);
-					stopService(intent);
+					stopService(showAddressIntent);
 				}else{
 					sivShowAddress.setStatus(true);
 					editor.putBoolean("showaddress", true);
 					scvChangeBg.setClickable(true);
-					startService(intent);
+					startService(showAddressIntent);
 				}
 				editor.commit();
 			}
@@ -130,5 +158,11 @@ public class SettingActivity extends Activity {
 			}
 		});
 	}
-	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sivShowAddress.setStatus(ServiceUtil.isRunning(this, "cn.geekduxu.xmanager.service.AddressService"));	
+		
+		sivShowAddress.setStatus(ServiceUtil.isRunning(this, "cn.geekduxu.xmanager.service.CallAndSmsSafeService"));	
+	}
 }
